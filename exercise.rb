@@ -42,7 +42,7 @@ def calculate_diff_in_days_between_dates(start_date, end_date)
         total_days += days_of_year[month_index]
       end
     else
-      days_of_year.each { |days| total_days += days }
+      total_days += days_of_year.sum
     end
   end
 
