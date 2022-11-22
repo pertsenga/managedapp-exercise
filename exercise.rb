@@ -59,6 +59,11 @@ def parse_date(date)
   }
 end
 
+def parse_input(raw_input)
+  dates = raw_input.split.map { |input| parse_date(input) }
+  dates.sort_by { |date| [date[:year], date[:month], date[:day]] }
+end
+
 def invalid_input?(input)
   false
 end
@@ -71,7 +76,7 @@ if (invalid_input?(raw_input))
   exit
 end
 
-dates = raw_input.split.map { |input| parse_date(input) }
+dates = parse_input(raw_input)
 start_date = dates.first
 end_date = dates.last
 days_diff = calculate_diff_in_days_between_dates(start_date, end_date)
