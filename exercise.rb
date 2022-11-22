@@ -1,6 +1,17 @@
 #!/usr/bin/env ruby
 
+CENTRURIAL_LEAP_YEAR = 1600
+
 public
+def leap_year?(year)
+  diff = LEAP_YEAR - year
+
+  return false if diff / 4 != 0
+  return false if diff / 100 == 0 && diff / 400 != 0 # special centurial year rule
+
+  true
+end
+
 def parse_date(date)
   date_parts = date.split("/").map(&:to_i)
 
