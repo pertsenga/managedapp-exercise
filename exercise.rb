@@ -6,10 +6,10 @@ LEAP_YEAR_DAYS_PER_MONTH = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
 
 public
 def leap_year?(year)
-  diff = CENTRURIAL_LEAP_YEAR - year
+  diff = year - CENTRURIAL_LEAP_YEAR
 
-  return false if diff / 4 != 0
-  return false if diff / 100 == 0 && diff / 400 != 0 # special centurial year rule
+  return false if diff % 4 != 0
+  return false if diff % 100 == 0 && diff % 400 != 0 # special centurial year rule
 
   true
 end
@@ -25,24 +25,21 @@ def calculate_diff_in_days_between_dates(start_date, end_date)
 
   (start_date[:year]..end_date[:year]).each do |year|
     days_of_year = get_days_per_month_of_year(year)
+    start_month_index = start_date[:month] - 1
+    end_month_index = end_date[:month] - 1
 
-    if year == start_date[:year] || year == end_date[:year]
-      start_month_index = if year != start_date[:year] then 0 else start_date[:month] - 1 end
-      end_month_index = if year != end_date[:year] then 11 else end_date[:month] - 1 end
-
-      if start_month_index == end_month_index
-        total_days += ((start_date[:day] + 1)...end_date[:day]).count
+    days_of_year.each_with_index do |days_count, month_index|
+      if start_date[:year] == year && start_month_index > month_index || end_date[:year] == year && end_month_index < month_index
+        next
+      elsif start_date[:year] == year && end_date[:year] == year && start_month_index == month_index && end_month_index == month_index
+        total_days += end_date[:day] - start_date[:day] - 1
+      elsif start_date[:year] == year && start_month_index == month_index
+        total_days += days_count - start_date[:day]
+      elsif end_date[:year] == year && end_month_index == month_index
+        total_days += end_date[:day] - 1
       else
-        total_days += ((start_date[:day] + 1)..days_of_year[start_month_index]).count
-        total_days += (1...end_date[:day]).count
+        total_days += days_count
       end
-
-      remaining_months_range = start_date[:month]...end_month_index
-      remaining_months_range.each do |month_index|
-        total_days += days_of_year[month_index]
-      end
-    else
-      total_days += days_of_year.sum
     end
   end
 
