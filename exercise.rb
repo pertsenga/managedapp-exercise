@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-CENTRURIAL_LEAP_YEAR = 1600
+CENTURIAL_LEAP_YEAR = 1600
 NORMAL_DAYS_PER_MONTH = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
 LEAP_YEAR_DAYS_PER_MONTH = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
 
 public
 def leap_year?(year)
-  diff = year - CENTRURIAL_LEAP_YEAR
+  diff = year - CENTURIAL_LEAP_YEAR
 
   return false if diff % 4 != 0
   return false if diff % 100 == 0 && diff % 400 != 0 # special centurial year rule
