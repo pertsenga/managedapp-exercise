@@ -32,7 +32,7 @@ def calculate_diff_in_days_between_dates(start_date, end_date)
       if start_date[:year] == year && start_month_index > month_index || end_date[:year] == year && end_month_index < month_index
         next
       elsif start_date[:year] == year && end_date[:year] == year && start_month_index == month_index && end_month_index == month_index
-        total_days += end_date[:day] - start_date[:day] - 1
+        total_days += ((start_date[:day] + 1)...end_date[:day]).count
       elsif start_date[:year] == year && start_month_index == month_index
         total_days += days_count - start_date[:day]
       elsif end_date[:year] == year && end_month_index == month_index
