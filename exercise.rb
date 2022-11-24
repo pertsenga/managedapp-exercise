@@ -61,19 +61,23 @@ def parse_input(raw_input)
   dates.sort_by { |date| [date[:year], date[:month], date[:day]] }
 end
 
-def invalid_input?(input)
+def invalid_input?(dates)
+  return true if dates.length != 2
+  return true if dates.first[:year] < 1900
+  return true if dates.last[:year] > 2999
+
   false
 end
 
 
 raw_input = STDIN.read
+dates = parse_input(raw_input)
 
-if (invalid_input?(raw_input))
+if (invalid_input?(dates))
   puts "invalid input"
   exit
 end
 
-dates = parse_input(raw_input)
 start_date = dates.first
 end_date = dates.last
 days_diff = calculate_diff_in_days_between_dates(start_date, end_date)
